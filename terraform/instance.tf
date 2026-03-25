@@ -3,7 +3,7 @@ resource "aws_instance" "project_1" {
   instance_type          = "t3.micro"
   key_name               = var.aws_key_pair
   availability_zone      = var.zone
-  vpc_security_group_ids = [aws_security_group.project_1-sg]
+  vpc_security_group_ids = [aws_security_group.project_1-sg.id]
 
   provisioner "file" {
     source      = "../scripts/web.sh"
