@@ -6,7 +6,7 @@ resource "aws_instance" "project_1" {
   vpc_security_group_ids = [aws_security_group.project_1-sg.id]
 
   provisioner "file" {
-    source      = "../scripts/web.sh"
+    source      = "web.sh"
     destination = "/tmp/web.sh"
 
     connection {

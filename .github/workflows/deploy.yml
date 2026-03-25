@@ -22,6 +22,9 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > terraform/project_1key
           chmod 600 terraform/project_1key
 
+      - name: Copy web.sh to terraform folder
+        run: cp scripts/web.sh terraform/web.sh
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
