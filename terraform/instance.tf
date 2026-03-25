@@ -5,22 +5,17 @@ resource "aws_instance" "project_1" {
   availability_zone      = var.zone
   vpc_security_group_ids = [aws_security_group.project_1-sg.id]
 
-  provisioner "file" {
-    source      = "web.sh"
-    destination = "/tmp/web.sh"
-
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = file("${path.module}/project_1key")
-      host        = self.public_ip
-    }
-  }
-
   provisioner "remote-exec" {
     inline = [
-      "chmod +x /tmp/web.sh",
-      "sudo /tmp/web.sh"
+      "#!/bin/bash",
+      "sudo apt update",
+      "sudo apt install wget unzip apache2 -y",
+      "sudo systemctl start apache2",
+      "sudo systemctl enable apache2",
+      "sudo wget https://www.tooplate.com/zip-templates/2117_infinite_loop.zip",
+      "sudo unzip -o 2117_infinite_loop.zip",
+      "sudo cp -r 2117_infinite_loop/* /var/www/html/",
+      "sudo systemctl restart apache2"
     ]
 
     connection {
