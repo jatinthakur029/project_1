@@ -11,9 +11,9 @@ variable "aws_key_pair" {
 }
 
 variable "amiID" {
-    type = map(any)
-    default = {
-      us-east-1="ami-04680790a315cd58d"
-    }
-  
+  type = map(any)
+  default = {
+    us-east-1 = "ami-04680790a315cd58d"
+  }
+
 }
