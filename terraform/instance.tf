@@ -12,7 +12,7 @@ resource "aws_instance" "project_1" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("project_1key")
+      private_key = file("${path.module}/project_1key")
       host        = self.public_ip
     }
   }
@@ -26,9 +26,13 @@ resource "aws_instance" "project_1" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("project_1key")
+      private_key = file("${path.module}/project_1key")
       host        = self.public_ip
     }
+  }
+
+  timeouts {
+    create = "10m"
   }
 
   tags = {
