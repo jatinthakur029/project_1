@@ -1,3 +1,4 @@
+# EC2 instance resource for the web server
 resource "aws_instance" "project_1" {
   ami                    = var.amiID[var.region]
   instance_type          = "t3.micro"
@@ -5,6 +6,7 @@ resource "aws_instance" "project_1" {
   availability_zone      = var.zone
   vpc_security_group_ids = [aws_security_group.project_1-sg.id]
 
+  # Remote execution provisioner to configure the instance
   provisioner "remote-exec" {
     inline = [
       "#!/bin/bash",
@@ -18,6 +20,7 @@ resource "aws_instance" "project_1" {
       "sudo systemctl restart apache2"
     ]
 
+    # SSH connection configuration
     connection {
       type        = "ssh"
       user        = "ubuntu"
@@ -26,15 +29,18 @@ resource "aws_instance" "project_1" {
     }
   }
 
+  # Timeout for instance creation
   timeouts {
     create = "10m"
   }
 
+  # Tags for the instance
   tags = {
     Name = "project_1"
   }
 }
 
+# Ensure the instance is in running state
 resource "aws_ec2_instance_state" "name" {
   instance_id = aws_instance.project_1.id
   state       = "running"

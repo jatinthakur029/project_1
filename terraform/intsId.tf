@@ -1,3 +1,4 @@
+# Data source to fetch the latest Ubuntu AMI
 data "aws_ami" "amiID" {
   most_recent = true
 
@@ -11,9 +12,10 @@ data "aws_ami" "amiID" {
     values = ["hvm"]
   }
 
-  owners = ["099720109477"]
+  owners = ["099720109477"]  # Canonical
 }
 
+# Output the AMI ID for reference
 output "instance_id" {
   description = "AMI ID of Ubuntu instance"
   value       = data.aws_ami.amiID.id
